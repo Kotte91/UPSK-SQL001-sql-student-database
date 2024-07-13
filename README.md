@@ -135,6 +135,32 @@ el siguiente formato:
 ## Paso 2
 
    `psql --username=freecodecamp --dbname=psql`
+
+
+
+ALTER TABLE students ADD FOREIGN KEY(major_id) REFERENCES majors(major_id);
+\d students
+ALTER TABLE courses ADD COLUMN course_id SERIAL PRIMARY KEY;
+ALTER TABLE courses ADD COLUMN course VARCHAR(100) NOT NULL;
+\d courses
+students=>                                           Table "public.courses"
++-----------+------------------------+-----------+----------+--------------------------------------------+
+|  Column   |          Type          | Collation | Nullable |                  Default                   |
++-----------+------------------------+-----------+----------+--------------------------------------------+
+| course_id | integer                |           | not null | nextval('courses_course_id_seq'::regclass) |
+| course    | character varying(100) |           | not null |                                            |
++-----------+------------------------+-----------+----------+--------------------------------------------+
+Indexes:
+    "courses_pkey" PRIMARY KEY, btree (course_id)
+
+ALTER TABLE majors_courses ADD COLUMN major_id INT;
+ALTER TABLE students ADD FOREIGN KEY(major_id) REFERENCES majors(major_id);
+ALTER TABLE majors_courses ADD FOREIGN KEY(major_id) REFERENCES majors(major_id);
+ALTER TABLE majors_courses ADD COLUMN course_id INT;
+ALTER TABLE majors_courses ADD FOREIGN KEY(course_id) REFERENCES courses(course_id);
+
+
+
 ```
 
 Puedes obtener un historial de los comandos ejecutados en una terminal
